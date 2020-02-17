@@ -9,3 +9,4 @@ router.get('/movie/:id', MovieCtrl.getMoviesById);
 router.get('/movies', MovieCtrl.getMovies);
 
 module.exports = router;
+
