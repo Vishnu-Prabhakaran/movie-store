@@ -22,7 +22,7 @@ class Links extends Component {
           {' '}
           Movie Studio
         </Link>
-        <Collpse>
+        <Collapse>
           <List>
             <Item>
               <Link to='/' className='nav-link'>
@@ -37,7 +37,7 @@ class Links extends Component {
               </Link>
             </Item>
           </List>
-        </Collpse>
+        </Collapse>
       </React.Fragment>
     );
   }
