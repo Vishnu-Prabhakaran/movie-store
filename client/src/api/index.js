@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseUrl: 'http://localhost:4000/api'
+  baseURL: 'http://localhost:4000/api'
 });
 
 export const insertMovie = payload => api.post(`/movie`, payload);
 export const getAllMovies = () => api.get(`/movies`);
-export const updateMoviesById = (id, payload) =>
+export const updateMovieById = (id, payload) =>
   api.put(`/movie/${id}`, payload);
 export const deleteMoviebyId = id => api.delete(`movie/${id}`);
 export const getMovieById = id => api.get(`/movie/${id}`);
@@ -15,7 +15,7 @@ const apis = {
   insertMovie,
   getAllMovies,
   updateMovieById,
-  deleteMovieById,
+  deleteMoviebyId,
   getMovieById
 };
 
