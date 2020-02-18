@@ -19,20 +19,17 @@ class Links extends Component {
     return (
       <React.Fragment>
         <Link to='/' className='navbar-brand'>
-          {' '}
           Movie Studio
         </Link>
         <Collapse>
           <List>
             <Item>
-              <Link to='/' className='nav-link'>
-                {' '}
-                Movies
+              <Link to='/movies/list' className='nav-link'>
+                List Movies
               </Link>
             </Item>
             <Item>
-              <Link to='/create' className='nav-link'>
-                {' '}
+              <Link to='/movies/create' className='nav-link'>
                 Create Movie
               </Link>
             </Item>
