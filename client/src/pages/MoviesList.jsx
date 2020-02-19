@@ -20,7 +20,7 @@ class DeleteMovie extends Component {
     event.preventDefault();
     if (
       window.confirm(
-        ` Do you want to delete the movie ${this.props.id} permanently?`
+        ` Do you want to delete the movie ${this.props.name} permanently?`
       )
     ) {
       api.deleteMovieById(this.props.id);
@@ -79,7 +79,7 @@ class MoviesList extends Component {
         Cell: function(props) {
           return (
             <span>
-              <DeleteMovie id={props.original._id} />
+              <DeleteMovie id={props.original._id} name={props.original.name}  />
             </span>
           );
         }
@@ -88,9 +88,10 @@ class MoviesList extends Component {
         Header: 'Update',
         accessor: '',
         Cell: function(props) {
+          console.log(props.original.name)
           return (
             <span>
-              <UpdateMovie id={props.original._id} />
+              <UpdateMovie id={props.original._id} name={props.original.name}  />
             </span>
           );
         }
