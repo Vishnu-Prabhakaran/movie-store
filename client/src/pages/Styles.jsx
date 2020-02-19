@@ -27,4 +27,14 @@ export const Styles = styled.div`
       }
     }
   }
-`
+`;
+
+export const Update = styled.div`
+  color: #ef9b0f;
+  cursor: 'pointer';
+`;
+
+export const Delete = styled.div`
+  color: #ff0000;
+  cursor: pointer;
+`;

@@ -1,48 +1,35 @@
 import React, { Component } from 'react';
-import { useTable } from 'react-table';
-import { Styles } from './Styles';
+import ReactTable from 'react-table-v6';
+import 'react-table-v6/react-table.css';
+import { Styles, Update, Delete } from './Styles';
 
 import api from '../api';
 
-function Table({ columns, data }) {
-  // Use the state and functions returned from useTable to build your UI
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable({
-    columns,
-    data
-  });
+class UpdateMovie extends Component {
+  updateUser = event => {
+    event.preventDefault();
+    window.location.href = `/movies/update/${this.props.id}`;
+  };
+  render() {
+    return <Update onClick={this.updateUser}> Update</Update>;
+  }
+}
 
-  // Render the UI for your table
-  return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
+class DeleteMovie extends Component {
+  deleteUser = event => {
+    event.preventDefault();
+    if (
+      window.confirm(
+        ` Do you want to delete the movie ${this.props.id} permanently?`
+      )
+    ) {
+      api.deleteMovieById(this.props.id);
+      window.location.reload();
+    }
+  };
+  render() {
+    return <Delete onClick={this.deleteUser}> Delete</Delete>;
+  }
 }
 
 class MoviesList extends Component {
@@ -55,7 +42,7 @@ class MoviesList extends Component {
     };
   }
 
-  componentDidMount = async () => {
+  async componentDidMount() {
     this.setState({ isLoading: true });
     await api.getAllMovies().then(movies => {
       this.setState({
@@ -63,12 +50,13 @@ class MoviesList extends Component {
         isLoading: false
       });
     });
-  };
+  }
 
   render() {
     const { movies, isLoading } = this.state;
-    console.log('TCL: MoviesList -> render -> movies', movies);
 
+    //console.log('TCL: MoviesList -> render -> movies', movies);
+    //console.log(`Props = ${movies}`);
     // Columns
     const columns = [
       { Header: 'ID', accessor: '_id', filterable: true },
@@ -82,7 +70,30 @@ class MoviesList extends Component {
       },
       {
         Header: 'Time',
-        accessor: 'time'
+        accessor: 'time',
+        Cell: props => <span>{props.value.join(' / ')}</span>,
+      },
+      {
+        Header: 'Delete',
+        accessor: '',
+        Cell: function(props) {
+          return (
+            <span>
+              <DeleteMovie id={props.original._id} />
+            </span>
+          );
+        }
+      },
+      {
+        Header: 'Update',
+        accessor: '',
+        Cell: function(props) {
+          return (
+            <span>
+              <UpdateMovie id={props.original._id} />
+            </span>
+          );
+        }
       }
     ];
 
@@ -94,7 +105,7 @@ class MoviesList extends Component {
     return (
       <Styles>
         {showTable && (
-          <Table
+          <ReactTable
             data={movies}
             columns={columns}
             loading={isLoading}
