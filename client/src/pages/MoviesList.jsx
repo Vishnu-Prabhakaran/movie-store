@@ -59,10 +59,11 @@ class MoviesList extends Component {
     //console.log(`Props = ${movies}`);
     // Columns
     const columns = [
-      { Header: 'ID', accessor: '_id', filterable: true },
+      //{ Header: 'ID', accessor: '_id',  },
       {
         Header: 'Name',
-        accessor: 'name'
+        accessor: 'name',
+        filterable: true
       },
       {
         Header: 'Rating',
